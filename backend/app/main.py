@@ -1,7 +1,11 @@
 from fastapi import FastAPI
+from app.database import engine, Base
+from app.models import player
 
-app = FastAPI(title="TK3 Tournament Manager")
+Base.metadata.create_all(bind=engine)
+
+app = FastAPI(title="TK3")
 
 @app.get("/")
 def home():
-    return {"server on"}
+    return {"server working on"}
