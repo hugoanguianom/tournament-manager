@@ -1,0 +1,42 @@
+<div class="players-page">
+  <h1>Players Management</h1>
+
+  <section class="players-section">
+    <h2>Active Players ({{ activePlayers.length }})</h2>
+
+    <div class="players-grid">
+      @for (player of activePlayers; track player.id) {
+      <div class="player-card active">
+        <img [src]="player.logo_url" [alt]="player.nick" class="player-logo">
+        <h3>{{ player.nick }}</h3>
+        <span class="status active">Active</span>
+        <button (click)="togglePlayer(player)" class="btn btn-deactivate">
+          Deactivate
+        </button>
+      </div>
+      } @empty {
+      <p class="empty-message">No active players</p>
+      }
+    </div>
+  </section>
+
+  <!-- Sección de jugadores INACTIVOS -->
+  <section class="players-section">
+    <h2>Inactive Players ({{ inactivePlayers.length }})</h2>
+
+    <div class="players-grid">
+      @for (player of inactivePlayers; track player.id) {
+      <div class="player-card inactive">
+        <img [src]="player.logo_url" [alt]="player.nick" class="player-logo">
+        <h3>{{ player.nick }}</h3>
+        <span class="status inactive">Inactive</span>
+        <button (click)="togglePlayer(player)" class="btn btn-activate">
+          Activate
+        </button>
+      </div>
+      } @empty {
+      <p class="empty-message">No inactive players</p>
+      }
+    </div>
+  </section>
+</div>
