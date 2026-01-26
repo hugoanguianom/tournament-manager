@@ -1,0 +1,35 @@
+ <div class="form-overlay">
+    <div class="form-container">
+      <h2>{{ playerToEdit ? 'Edit Player' : 'New Player' }}</h2>
+
+
+      <div class="form-group">
+        <label>Nick *</label>
+        <input
+          type="text"
+          [(ngModel)]="nick"
+          (ngModelChange)="onNickChange()"
+          placeholder="Enter nick"
+          [class.input-error]="showError">
+
+
+        @if (showError) {
+          <span class="error-message">Empty field</span>
+        }
+      </div>
+
+
+      <div class="logo-preview">
+
+        <img [src]="avatarPreview" alt="Avatar preview">
+      </div>
+
+
+      <div class="form-actions">
+        <button class="btn btn-cancel" (click)="onCancel()">Cancel</button>
+        <button class="btn btn-save" (click)="onSave()">
+          {{ playerToEdit ? 'Update' : 'Create' }}
+        </button>
+      </div>
+    </div>
+  </div>

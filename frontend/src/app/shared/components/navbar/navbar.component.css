@@ -1,32 +1,91 @@
+
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #1a1a2e;
-    padding: 1rem 2rem;
-    color: white;
-  }
 
-  .navbar-brand h1 {
-    margin: 0;
-    font-size: 1.5rem;
-  }
+  --challonge-dark: #2D2D2D;
+  --challonge-orange: #F36526;
+  --text-white: #FFFFFF;
+  --text-gray: #CCCCCC;
 
-  .navbar-menu {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    gap: 2rem;
-  }
+  background-color: var(--challonge-dark);
+  border-bottom: 3px solid var(--challonge-orange);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: 60px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
 
-  .navbar-menu a {
-    color: white;
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s;
-  }
+.navbar-container {
+  max-width: 1100px;
+  height: 60px;
+  margin: 0 auto;
+  padding: 0 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-  .navbar-menu a:hover {
-    color: #00d9ff;
-  }
+/* MARCA / LOGO */
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.navbar-brand h1 {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+  color: var(--challonge-orange);
+  letter-spacing: -0.5px;
+}
+
+.logo-icon {
+  font-size: 24px;
+  color: var(--text-white);
+}
+
+
+.navbar-menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  height: 100%;
+  align-items: center;
+}
+
+.navbar-menu li {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-menu a {
+  text-decoration: none;
+  color: var(--text-gray);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 0 15px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -3px;
+}
+
+
+.navbar-menu a:hover {
+  color: var(--text-white);
+  background-color: #3D3D3D;
+}
+
+
+.active-link {
+  color: var(--text-white) !important;
+  background-color: #3D3D3D;
+  border-bottom: 3px solid var(--challonge-orange) !important;
+}

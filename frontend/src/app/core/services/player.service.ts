@@ -24,16 +24,18 @@ export class PlayersService {
 
 
   // POST /players to create a new player
-  create(player: Omit<Player, 'id'|'active'>): Observable<Player> {
-    return this.http.post<Player>(this.apiUrl, player);
-  }
+  // Solo enviamos nick
+    create(player: { nick: string }): Observable<Player> {
+      return this.http.post<Player>(this.apiUrl, player);
+    }
 
 
   // PUT /players/{id} to edit a player
   // all attributes optional
-  update(id: number, player: Partial<Player>): Observable<Player> {
-    return this.http.put<Player>(`${this.apiUrl}/${id}`, player);
-  }
+  
+    update(id: number, player: { nick?: string, active?: boolean }): Observable<Player> {
+      return this.http.put<Player>(`${this.apiUrl}/${id}`, player);
+    }
 
   // PATCH /players/{id}/toggle status of a player
   toggleActive(id: number): Observable<Player> {
