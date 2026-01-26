@@ -1,0 +1,71 @@
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.btn-back {
+  background: none;
+  border: none;
+  color: #777;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.players-selection-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.player-select-card {
+  background: white;
+  border: 1px solid #E0E0E0;
+  border-radius: 4px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+}
+
+.player-select-card:hover {
+  border-color: #F36526;
+  transform: translateY(-2px);
+}
+
+.player-select-card.selected {
+  border: 2px solid #F36526;
+  background-color: #FFF8F5;
+}
+
+.player-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.selection-indicator {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid #DDD;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 14px;
+  color: #DDD;
+}
+
+.selected .selection-indicator {
+  background-color: #F36526;
+  border-color: #F36526;
+  color: white;
+}
+
+.player-select-card h3 {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+}

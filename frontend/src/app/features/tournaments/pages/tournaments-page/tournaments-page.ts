@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TournamentsService } from '../../../../core/services/tournaments.service';
 import { Tournament } from '../../../models/tournament.model';
+import { Router } from '@angular/router';
 import { TournamentFormComponent } from '../../components/tournament-form/tournament-form';
 
 @Component({
@@ -16,13 +17,16 @@ export class TournamentsPageComponent implements OnInit {
   tournaments: Tournament[] = [];
   showForm: boolean = false;
 
-  constructor(private tournamentsService: TournamentsService) {}
+  constructor(private tournamentsService: TournamentsService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void { this.loadTournaments(); }
 
   loadTournaments() {
     this.tournamentsService.getAll().subscribe(data => this.tournaments = data);
   }
+
 
 
   openCreateForm() {
@@ -41,7 +45,7 @@ export class TournamentsPageComponent implements OnInit {
   }
 
   goToDetails(id: number) {
-    // Aquí navegarás a /tournaments/1 por ejemplo
-    console.log('Navegando al torneo', id);
+  
+  this.router.navigate(['/tournaments', id]);
   }
 }

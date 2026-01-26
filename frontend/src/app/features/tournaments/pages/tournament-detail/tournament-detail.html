@@ -1,0 +1,41 @@
+<div class="tournaments-page">
+  <div class="page-header">
+    <div class="header-left">
+      <button class="btn-back" routerLink="/tournaments">← Volver</button>
+      <h1>Configurar Participantes</h1>
+    </div>
+    <button
+      class="btn-save"
+      [disabled]="selectedPlayerIds.length < 2"
+      (click)="confirmParticipants()">
+      Generar Cuadro ({{ selectedPlayerIds.length }})
+    </button>
+  </div>
+
+  <section class="tournaments-section">
+    <h2 class="section-title">
+      Jugadores Disponibles <span class="badge">{{ allPlayers.length }}</span>
+    </h2>
+
+    <div class="players-selection-grid">
+      @for (player of allPlayers; track player.id) {
+        <div
+          class="player-select-card"
+          [class.selected]="selectedPlayerIds.includes(player.id)"
+          (click)="togglePlayer(player.id)">
+
+          <div class="player-info">
+            <span class="selection-indicator">
+              {{ selectedPlayerIds.includes(player.id) ? '✓' : '+' }}
+            </span>
+            <h3>{{ player.nick }}</h3>
+          </div>
+        </div>
+      } @empty {
+        <div class="empty-state">
+          <p>No hay jugadores activos. Ve a la sección de Jugadores para crear algunos.</p>
+        </div>
+      }
+    </div>
+  </section>
+</div>
