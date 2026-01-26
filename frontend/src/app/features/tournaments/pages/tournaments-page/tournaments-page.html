@@ -1,30 +1,48 @@
-<section class="tournaments-container">
-  <header class="page-header">
-    <h1>Torneos KO</h1>
-    <button class="btn-new-tournament">Nuevo Torneo</button>
-  </header>
+<div class="tournaments-page">
+  <div class="page-header">
+    <h1>Gestión de Torneos</h1>
+    <button class="btn btn-add" (click)="openCreateForm()">
+      Crear Nuevo Torneo
+    </button>
+  </div>
 
-  <main class="content">
-    @if (tournaments.length === 0) {
-      <div class="empty-state">
-        <p>No hay torneos disponibles. Crea uno para empezar.</p>
-      </div>
-    } @else {
-      <div class="tournaments-grid">
-        @for (t of tournaments; track t.id) {
-          <article class="tournament-card">
-            <header class="card-header">
+  <section class="tournaments-section">
+    <h2 class="section-title">
+      Torneos Registrados <span class="badge">{{ tournaments.length }}</span>
+    </h2>
+
+    <div class="tournaments-grid">
+      @for (t of tournaments; track t.id) {
+        <div class="tournament-card" [attr.data-status]="t.status">
+          <div class="card-header">
+            <div class="tournament-identity">
               <h3>{{ t.name }}</h3>
               <span class="status-badge">{{ t.status }}</span>
-            </header>
-
-            <div class="card-body">
-              <p class="date">Creado el: {{ t.created_at | date:'shortDate' }}</p>
-              <button class="btn-details">Ver Cuadro</button>
             </div>
-          </article>
-        }
-      </div>
-    }
-  </main>
-</section>
+          </div>
+
+          <div class="card-divider"></div>
+
+          <div class="card-actions">
+            <button (click)="goToDetails(t.id)" class="btn btn-text view">
+              Ver Detalles
+            </button>
+          </div>
+        </div>
+      } @empty {
+        <div class="empty-state">
+          <p>No hay torneos creados todavía.</p>
+        </div>
+      }
+    </div>
+  </section>
+
+  @if (showForm) {
+    <div class="form-overlay">
+      <app-tournament-form
+        (save)="handleSave($event)"
+        (cancel)="closeForm()">
+      </app-tournament-form>
+    </div>
+  }
+</div>
