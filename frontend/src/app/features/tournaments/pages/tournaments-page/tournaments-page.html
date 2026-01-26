@@ -1,0 +1,30 @@
+<section class="tournaments-container">
+  <header class="page-header">
+    <h1>Torneos KO</h1>
+    <button class="btn-new-tournament">Nuevo Torneo</button>
+  </header>
+
+  <main class="content">
+    @if (tournaments.length === 0) {
+      <div class="empty-state">
+        <p>No hay torneos disponibles. Crea uno para empezar.</p>
+      </div>
+    } @else {
+      <div class="tournaments-grid">
+        @for (t of tournaments; track t.id) {
+          <article class="tournament-card">
+            <header class="card-header">
+              <h3>{{ t.name }}</h3>
+              <span class="status-badge">{{ t.status }}</span>
+            </header>
+
+            <div class="card-body">
+              <p class="date">Creado el: {{ t.created_at | date:'shortDate' }}</p>
+              <button class="btn-details">Ver Cuadro</button>
+            </div>
+          </article>
+        }
+      </div>
+    }
+  </main>
+</section>
