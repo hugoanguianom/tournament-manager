@@ -5,9 +5,9 @@ from datetime import datetime
 from app.database import Base
 
 class TournamentStatus(str, enum.Enum):
-    DRAFT = "DRAFT"         
-    GENERATED = "GENERATED" 
-    FINISHED = "FINISHED"   
+    DRAFT = "DRAFT"
+    GENERATED = "GENERATED"
+    FINISHED = "FINISHED"
 
 class Tournament(Base):
     __tablename__ = "tournaments"
@@ -17,5 +17,9 @@ class Tournament(Base):
     status = Column(Enum(TournamentStatus), default=TournamentStatus.DRAFT)
     created_at = Column(DateTime, default=datetime.utcnow)
 
-
-    participants = relationship("TournamentPlayer", back_populates="tournament")
+    
+    participants = relationship(
+        "Player",
+        secondary="tournament_players",
+        backref="participated_tournaments"
+    )

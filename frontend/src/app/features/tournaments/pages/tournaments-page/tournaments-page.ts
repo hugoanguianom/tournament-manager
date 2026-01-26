@@ -24,7 +24,7 @@ export class TournamentsPageComponent implements OnInit {
   ngOnInit(): void { this.loadTournaments(); }
 
   loadTournaments() {
-    this.tournamentsService.getAll().subscribe(data => this.tournaments = data);
+    this.tournamentsService.getTournaments().subscribe(data => this.tournaments = data);
   }
 
 
@@ -38,14 +38,14 @@ export class TournamentsPageComponent implements OnInit {
   }
 
   handleSave(data: { name: string }) {
-    this.tournamentsService.create(data).subscribe(() => {
+    this.tournamentsService.createTournament(data).subscribe(() => {
       this.loadTournaments();
       this.closeForm();
     });
   }
 
   goToDetails(id: number) {
-  
+
   this.router.navigate(['/tournaments', id]);
   }
 }

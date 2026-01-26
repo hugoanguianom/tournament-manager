@@ -98,11 +98,7 @@
 .tournament-card[data-status="GENERATED"] .status-badge { color: #00A3E0; background: #e0f4ff; }
 .tournament-card[data-status="FINISHED"] .status-badge { color: #5CB85C; background: #e6f4e6; }
 
-.card-divider {
-  height: 1px;
-  background-color: #F0F0F0;
-  margin: 15px -15px 12px -15px;
-}
+
 
 .card-actions {
   display: flex;

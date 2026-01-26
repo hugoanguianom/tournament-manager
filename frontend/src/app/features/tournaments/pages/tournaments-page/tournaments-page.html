@@ -1,15 +1,13 @@
 <div class="tournaments-page">
   <div class="page-header">
-    <h1>Gestión de Torneos</h1>
+    <h1>Torneos</h1>
     <button class="btn btn-add" (click)="openCreateForm()">
       Crear Nuevo Torneo
     </button>
   </div>
 
   <section class="tournaments-section">
-    <h2 class="section-title">
-      Torneos Registrados <span class="badge">{{ tournaments.length }}</span>
-    </h2>
+
 
     <div class="tournaments-grid">
       @for (t of tournaments; track t.id) {
@@ -21,7 +19,7 @@
             </div>
           </div>
 
-          <div class="card-divider"></div>
+
 
           <div class="card-actions">
             <button (click)="goToDetails(t.id)" class="btn btn-text view">

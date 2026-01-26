@@ -1,5 +1,4 @@
 from sqlalchemy import Column, Integer, String, Boolean
-from sqlalchemy.orm import relationship # <--- Importar esto
 from app.database import Base
 
 class Player(Base):
@@ -9,5 +8,4 @@ class Player(Base):
     nick = Column(String(100), nullable=False, unique=True)
     active = Column(Boolean, default=True)
 
-
-    tournaments = relationship("TournamentPlayer", back_populates="player")
+   

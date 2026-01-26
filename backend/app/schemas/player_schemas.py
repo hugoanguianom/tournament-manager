@@ -17,6 +17,7 @@ class PlayerResponse(BaseModel):
     id:int
     nick: str
     active: bool
+    
 
     # Convert database player to JSON
     class Config:

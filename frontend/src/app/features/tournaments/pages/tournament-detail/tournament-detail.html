@@ -1,41 +1,67 @@
 <div class="tournaments-page">
   <div class="page-header">
     <div class="header-left">
-      <button class="btn-back" routerLink="/tournaments">← Volver</button>
-      <h1>Configurar Participantes</h1>
+      <button class="btn-back" routerLink="/tournaments">Volver</button>
+      <h1>{{ tournament?.name }}</h1>
+      <span class="status-badge" [class.generated]="tournament?.status === 'GENERATED'">
+        {{ tournament?.status }}
+      </span>
     </div>
-    <button
-      class="btn-save"
-      [disabled]="selectedPlayerIds.length < 2"
-      (click)="confirmParticipants()">
-      Generar Cuadro ({{ selectedPlayerIds.length }})
-    </button>
+
+    @if (tournament?.status === 'DRAFT') {
+      <button
+        class="btn-save"
+        [disabled]="selectedPlayerIds.length < 2"
+        (click)="confirmParticipants()">
+        Generar Cuadro
+      </button>
+    }
   </div>
 
-  <section class="tournaments-section">
-    <h2 class="section-title">
-      Jugadores Disponibles <span class="badge">{{ allPlayers.length }}</span>
-    </h2>
 
-    <div class="players-selection-grid">
-      @for (player of allPlayers; track player.id) {
-        <div
-          class="player-select-card"
-          [class.selected]="selectedPlayerIds.includes(player.id)"
-          (click)="togglePlayer(player.id)">
+  @if (tournament?.status === 'DRAFT') {
+    <section class="tournaments-section">
+      <h2 class="section-title">
 
-          <div class="player-info">
-            <span class="selection-indicator">
-              {{ selectedPlayerIds.includes(player.id) ? '✓' : '+' }}
-            </span>
-            <h3>{{ player.nick }}</h3>
+        <span class="badge">{{ allPlayers.length }} disponibles</span>
+      </h2>
+
+      <div class="players-selection-grid">
+        @for (player of allPlayers; track player.id) {
+          <div
+            class="player-select-card"
+            [class.selected]="isSelected(player.id)"
+            (click)="togglePlayer(player.id)">
+            <img [src]="getAvatarUrl(player.nick)" alt="Avatar" class="player-avatar">
+            <div class="player-info">
+
+              <h3>{{ player.nick }}</h3>
+            </div>
           </div>
-        </div>
-      } @empty {
-        <div class="empty-state">
-          <p>No hay jugadores activos. Ve a la sección de Jugadores para crear algunos.</p>
-        </div>
-      }
-    </div>
-  </section>
+        }
+      </div>
+    </section>
+  }
+
+
+  @if (tournament?.status === 'GENERATED') {
+    <section class="tournaments-section">
+      <h2 class="section-title">
+        Participantes Confirmados
+        <span class="badge">{{ tournamentParticipants.length }}</span>
+      </h2>
+
+      <div class="players-selection-grid">
+        @for (player of tournamentParticipants; track player.id) {
+          <div class="player-select-card selected readonly">
+            <img [src]="getAvatarUrl(player.nick)" alt="Avatar" class="player-avatar">
+            <div class="player-info">
+
+              <h3>{{ player.nick }}</h3>
+            </div>
+          </div>
+        }
+      </div>
+    </section>
+  }
 </div>

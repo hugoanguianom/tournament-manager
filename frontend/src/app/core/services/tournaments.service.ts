@@ -1,22 +1,33 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Tournament, TournamentCreate } from '../../features/models/tournament.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TournamentsService {
-
+  
   private apiUrl = 'http://localhost:8000/tournaments';
 
   constructor(private http: HttpClient) { }
 
-  getAll(): Observable<Tournament[]> {
-    return this.http.get<Tournament[]>(this.apiUrl);
+
+  getTournaments(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl);
   }
 
-  create(tournament: TournamentCreate): Observable<Tournament> {
-    return this.http.post<Tournament>(this.apiUrl, tournament);
+
+  getTournament(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/${id}`);
+  }
+
+
+  createTournament(tournament: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl, tournament);
+  }
+
+
+  generateTournament(id: number, payload: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/${id}/generate`, payload);
   }
 }
