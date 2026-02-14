@@ -1,5 +1,5 @@
 import enum
-from sqlalchemy import Column, Integer, String, DateTime, Enum
+from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, Enum
 from sqlalchemy.orm import relationship
 from datetime import datetime
 from app.database import Base
@@ -16,10 +16,12 @@ class Tournament(Base):
     name = Column(String(100), nullable=False)
     status = Column(Enum(TournamentStatus), default=TournamentStatus.DRAFT)
     created_at = Column(DateTime, default=datetime.utcnow)
-
+    winner_id = Column(Integer, ForeignKey("players.id"), nullable=True)
     
     participants = relationship(
         "Player",
         secondary="tournament_players",
         backref="participated_tournaments"
     )
+
+    matches = relationship("Match", back_populates="tournament")

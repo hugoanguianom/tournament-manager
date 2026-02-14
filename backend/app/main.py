@@ -3,7 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.database import engine, Base
 from app.models import player
 from app.models import tournament
-from app.models import tournament_player 
+from app.models import tournament_player
+from app.models import match 
 from fastapi.middleware.cors import CORSMiddleware 
 
 from app.routers import players_router, tournaments_router
