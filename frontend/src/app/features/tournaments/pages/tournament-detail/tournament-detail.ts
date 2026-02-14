@@ -18,6 +18,8 @@ export class TournamentDetailComponent implements OnInit {
   allPlayers: Player[] = [];           // Jugadores activos disponibles (para DRAFT)
   tournamentParticipants: Player[] = []; // Participantes del torneo (para GENERATED)
   selectedPlayerIds: number[] = [];
+  matches: any[] = [];
+  rounds: any[][] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -42,6 +44,7 @@ export class TournamentDetailComponent implements OnInit {
             // Torneo ya generado: mostrar participantes del backend
             this.tournamentParticipants = data.participants || [];
             this.selectedPlayerIds = this.tournamentParticipants.map((p: Player) => p.id);
+             this.loadBracket();
           } else {
             // Torneo en DRAFT: cargar jugadores activos para seleccionar
             this.loadPlayers();
@@ -58,6 +61,42 @@ export class TournamentDetailComponent implements OnInit {
     this.playersService.getAll().subscribe(players => {
       this.allPlayers = players.filter(p => p.active);
     });
+  }
+
+groupMatchesByRound() {
+    this.rounds = [];
+
+
+    let maxRound = 0;
+    for (let i = 0; i < this.matches.length; i++) {
+      if (this.matches[i].round > maxRound) {
+        maxRound = this.matches[i].round;
+      }
+    }
+
+
+    for (let r = 1; r <= maxRound; r++) {
+      const roundMatches = [];
+      for (let i = 0; i < this.matches.length; i++) {
+        if (this.matches[i].round === r) {
+          roundMatches.push(this.matches[i]);
+        }
+      }
+      this.rounds.push(roundMatches);
+    }
+  }
+  loadBracket() {
+    if (this.tournamentId) {
+      this.tournamentsService.getBracket(this.tournamentId).subscribe({
+        next: (matches) => {
+          this.matches = matches;
+          this.groupMatchesByRound();
+        },
+        error: (err) => {
+          console.error('Error al cargar bracket:', err);
+        }
+      });
+    }
   }
 
   togglePlayer(id: number) {

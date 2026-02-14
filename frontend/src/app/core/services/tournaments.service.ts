@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class TournamentsService {
-  
+
   private apiUrl = 'http://localhost:8000/tournaments';
 
   constructor(private http: HttpClient) { }
@@ -30,4 +30,8 @@ export class TournamentsService {
   generateTournament(id: number, payload: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/${id}/generate`, payload);
   }
+  getBracket(tournamentId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/${tournamentId}/bracket`);
+  }
+
 }

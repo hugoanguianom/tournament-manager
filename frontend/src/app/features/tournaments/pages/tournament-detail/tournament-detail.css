@@ -170,7 +170,7 @@
 }
 
 .player-select-card.readonly.selected::after {
-  content: ''; 
+  content: '';
 }
 
 
@@ -192,3 +192,92 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+/* ===== BRACKET ===== */
+  .bracket-section {
+    max-width: 1100px;
+    margin: 0 auto 40px auto;
+  }
+
+  .bracket-container {
+    display: flex;
+    gap: 30px;
+    overflow-x: auto;
+    padding: 20px 0;
+  }
+
+  .round-column {
+    min-width: 220px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .round-title {
+    text-align: center;
+    font-size: 13px;
+    text-transform: uppercase;
+    color: var(--text-gray);
+    font-weight: 700;
+    margin: 0 0 5px 0;
+  }
+
+  .match-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .match-card.resolved {
+    border-color: var(--brand-green);
+  }
+
+  .match-player {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 8px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .match-player.winner {
+    background-color: #E8F5E9;
+    color: #2E7D32;
+  }
+
+  .match-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+    background-color: #EEE;
+  }
+
+  .match-vs {
+    text-align: center;
+    font-size: 11px;
+    color: #AAA;
+    font-weight: 700;
+  }
+
+  .bye-text {
+    color: #BBB;
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  .match-result {
+    text-align: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--brand-green);
+    margin-top: 4px;
+  }
+
+  .match-result.pending {
+    color: #999;
+  }
