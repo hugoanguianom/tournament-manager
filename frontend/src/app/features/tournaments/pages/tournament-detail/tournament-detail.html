@@ -1,0 +1,91 @@
+<div class="tournaments-page">
+  <div class="page-header">
+    <div class="header-left">
+      <button class="btn-back" routerLink="/tournaments">Volver</button>
+      <h1>{{ tournament?.name }}</h1>
+      <span class="status-badge" [class.generated]="tournament?.status === 'GENERATED'">
+        {{ tournament?.status }}
+      </span>
+    </div>
+
+    @if (tournament?.status === 'DRAFT') {
+      <button
+        class="btn-save"
+        [disabled]="selectedPlayerIds.length < 2"
+        (click)="confirmParticipants()">
+        Generar Cuadro
+      </button>
+    }
+  </div>
+
+
+  @if (tournament?.status === 'DRAFT') {
+    <section class="tournaments-section">
+      <h2 class="section-title">
+
+        <span class="badge">{{ allPlayers.length }} disponibles</span>
+      </h2>
+
+      <div class="players-selection-grid">
+        @for (player of allPlayers; track player.id) {
+          <div
+            class="player-select-card"
+            [class.selected]="isSelected(player.id)"
+            (click)="togglePlayer(player.id)">
+            <img [src]="getAvatarUrl(player.nick)" alt="Avatar" class="player-avatar">
+            <div class="player-info">
+
+              <h3>{{ player.nick }}</h3>
+            </div>
+          </div>
+        }
+      </div>
+    </section>
+  }
+
+
+  @if (tournament?.status === 'GENERATED' && rounds.length > 0) {
+    <section class="bracket-section">
+      <h2 class="section-title">Cuadro de Enfrentamientos</h2>
+
+      <div class="bracket-container">
+        @for (round of rounds; track $index) {
+          <div class="round-column">
+            <h3 class="round-title">Ronda {{ $index + 1 }}</h3>
+
+            @for (match of round; track match.id) {
+              <div class="match-card" [class.resolved]="match.status === 'RESOLVED'">
+
+                <div class="match-player" [class.winner]="match.winner_id === match.player1?.id">
+                  @if (match.player1) {
+                    <img [src]="getAvatarUrl(match.player1.nick)" class="match-avatar">
+                    <span>{{ match.player1.nick }}</span>
+                  } @else {
+                    <span class="bye-text">BYE</span>
+                  }
+                </div>
+
+                <div class="match-vs">VS</div>
+
+                <div class="match-player" [class.winner]="match.winner_id === match.player2?.id">
+                  @if (match.player2) {
+                    <img [src]="getAvatarUrl(match.player2.nick)" class="match-avatar">
+                    <span>{{ match.player2.nick }}</span>
+                  } @else {
+                    <span class="bye-text">BYE</span>
+                  }
+                </div>
+
+                @if (match.status === 'RESOLVED') {
+                  <div class="match-result">Resuelto</div>
+                } @else {
+                  <div class="match-result pending">Pendiente</div>
+                }
+              </div>
+            }
+          </div>
+        }
+      </div>
+    </section>
+  }
+</div>

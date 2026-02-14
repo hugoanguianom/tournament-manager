@@ -7,3 +7,5 @@ class Player(Base):
     id = Column(Integer, primary_key=True, index=True)
     nick = Column(String(100), nullable=False, unique=True)
     active = Column(Boolean, default=True)
+
+   
