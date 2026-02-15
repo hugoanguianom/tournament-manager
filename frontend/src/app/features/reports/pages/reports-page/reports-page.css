@@ -1,0 +1,203 @@
+ .reports-page {
+    --bg-body: #F0F0F0;
+    --bg-card: #FFFFFF;
+    --brand-orange: #F36526;
+    --brand-green: #5CB85C;
+    --text-dark: #333333;
+    --text-gray: #777777;
+    --border-color: #E0E0E0;
+
+    background-color: var(--bg-body);
+    min-height: 100vh;
+    padding: 30px 20px;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: var(--text-dark);
+  }
+
+  .page-title {
+    max-width: 1100px;
+    margin: 0 auto 30px auto;
+    font-size: 24px;
+    font-weight: 700;
+  }
+
+  .report-section {
+    max-width: 1100px;
+    margin: 0 auto 40px auto;
+  }
+
+  .section-title {
+    font-size: 16px;
+    color: var(--text-gray);
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 15px;
+  }
+
+  /* ===== LEADERBOARD TABLE ===== */
+  .leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--bg-card);
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+  }
+
+  .leaderboard-table th {
+    background: #FAFAFA;
+    text-align: left;
+    padding: 10px 15px;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: var(--text-gray);
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .leaderboard-table td {
+    padding: 10px 15px;
+    border-bottom: 1px solid #F0F0F0;
+    font-size: 14px;
+  }
+
+  .leaderboard-table tr.inactive {
+    opacity: 0.5;
+  }
+
+  .rank {
+    font-weight: 700;
+    color: var(--text-gray);
+    width: 40px;
+  }
+
+  .player-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+  }
+
+  .table-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    background: #EEE;
+  }
+
+  .inactive-badge {
+    font-size: 10px;
+    background: #EEE;
+    color: #999;
+    padding: 2px 6px;
+    border-radius: 3px;
+  }
+
+  .wins {
+    color: var(--brand-green);
+    font-weight: 700;
+  }
+
+  .losses {
+    color: #E74C3C;
+    font-weight: 700;
+  }
+
+  /* ===== TOURNAMENT SELECTOR ===== */
+  .tournament-selector {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .tournament-btn {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+  }
+
+  .tournament-btn:hover {
+    border-color: #BBB;
+  }
+
+  .tournament-btn.active {
+    border-color: var(--brand-orange);
+    background: #FFF5F0;
+  }
+
+  .status-tag {
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    background: #EEE;
+    color: #777;
+  }
+
+  /* ===== MATCHES TABLE ===== */
+  .matches-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--bg-card);
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+  }
+
+  .matches-table th {
+    background: #FAFAFA;
+    text-align: left;
+    padding: 10px 15px;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: var(--text-gray);
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .matches-table td {
+    padding: 10px 15px;
+    border-bottom: 1px solid #F0F0F0;
+    font-size: 14px;
+  }
+
+  .vs {
+    color: #CCC;
+    font-weight: 700;
+    font-size: 12px;
+    text-align: center;
+  }
+
+  .winner-cell {
+    font-weight: 700;
+    color: var(--brand-green);
+  }
+
+  .status-badge {
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 3px;
+    background: #FFF3E0;
+    color: #E65100;
+  }
+
+  .status-badge.resolved {
+    background: #E8F5E9;
+    color: #2E7D32;
+  }
+
+  .no-data {
+    color: var(--text-gray);
+    font-size: 14px;
+    text-align: center;
+    padding: 30px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+  }

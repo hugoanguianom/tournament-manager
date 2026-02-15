@@ -1,0 +1,86 @@
+<div class="reports-page">
+    <h1 class="page-title">Informes y Estadisticas</h1>
+
+    <section class="report-section">
+      <h2 class="section-title">Ranking de Jugadores</h2>
+
+      <table class="leaderboard-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Jugador</th>
+            <th>Victorias</th>
+            <th>Derrotas</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (player of leaderboard; track player.id) {
+            <tr [class.inactive]="!player.active">
+              <td class="rank">{{ $index + 1 }}</td>
+              <td class="player-cell">
+                <img [src]="getAvatarUrl(player.nick)" class="table-avatar">
+                <span>{{ player.nick }}</span>
+                @if (!player.active) {
+                  <span class="inactive-badge">Inactivo</span>
+                }
+              </td>
+              <td class="wins">{{ player.wins }}</td>
+              <td class="losses">{{ player.losses }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </section>
+
+    <!-- HISTORIAL DE COMBATES -->
+    <section class="report-section">
+      <h2 class="section-title">Historial de Combates</h2>
+
+      <div class="tournament-selector">
+        @for (t of tournaments; track t.id) {
+          <button
+            class="tournament-btn"
+            [class.active]="selectedTournamentId === t.id"
+            (click)="selectTournament(t.id)">
+            {{ t.name }}
+            <span class="status-tag">{{ t.status }}</span>
+          </button>
+        }
+      </div>
+
+      @if (matches.length > 0) {
+        <table class="matches-table">
+          <thead>
+            <tr>
+              <th>Ronda</th>
+              <th>Jugador 1</th>
+              <th></th>
+              <th>Jugador 2</th>
+              <th>Ganador</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (match of matches; track match.id) {
+              <tr>
+                <td>{{ match.round }}</td>
+                <td>{{ match.player1?.nick || 'BYE' }}</td>
+                <td class="vs">VS</td>
+                <td>{{ match.player2?.nick || 'BYE' }}</td>
+                <td class="winner-cell">{{ getWinnerNick(match) }}</td>
+                <td>
+                  <span class="status-badge" [class.resolved]="match.status === 'RESOLVED'">
+                    {{ match.status === 'RESOLVED' ? 'Resuelto' : 'Pendiente' }}
+                  </span>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      } @else if (selectedTournamentId) {
+        <p class="no-data">No hay combates en este torneo</p>
+      } @else {
+        <p class="no-data">Selecciona un torneo para ver su historial</p>
+      }
+    </section>
+  </div>
