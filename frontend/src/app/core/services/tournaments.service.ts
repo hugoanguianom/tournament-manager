@@ -33,5 +33,15 @@ export class TournamentsService {
   getBracket(tournamentId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/${tournamentId}/bracket`);
   }
+  setMatchWinner(tournamentId: number, matchId: number, winnerId: number): Observable<any> {
+    return this.http.post<any>(
+      `${this.apiUrl}/${tournamentId}/matches/${matchId}/winner`,
+      { winner_id: winnerId }
+    );
+  }
+
+  generateNextRound(tournamentId: number): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/${tournamentId}/next-round`, {});
+  }
 
 }

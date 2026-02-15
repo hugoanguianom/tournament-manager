@@ -44,7 +44,7 @@
   }
 
 
-  @if (tournament?.status === 'GENERATED' && rounds.length > 0) {
+   @if (tournament?.status === 'GENERATED' && rounds.length > 0) {
     <section class="bracket-section">
       <h2 class="section-title">Cuadro de Enfrentamientos</h2>
 
@@ -56,7 +56,11 @@
             @for (match of round; track match.id) {
               <div class="match-card" [class.resolved]="match.status === 'RESOLVED'">
 
-                <div class="match-player" [class.winner]="match.winner_id === match.player1?.id">
+                <div
+                  class="match-player"
+                  [class.winner]="match.winner_id === match.player1?.id"
+                  [class.clickable]="match.status === 'PENDING' && match.player1"
+                  (click)="match.status === 'PENDING' && match.player1 ? selectWinner(match, match.player1.id) : null">
                   @if (match.player1) {
                     <img [src]="getAvatarUrl(match.player1.nick)" class="match-avatar">
                     <span>{{ match.player1.nick }}</span>
@@ -67,7 +71,11 @@
 
                 <div class="match-vs">VS</div>
 
-                <div class="match-player" [class.winner]="match.winner_id === match.player2?.id">
+                <div
+                  class="match-player"
+                  [class.winner]="match.winner_id === match.player2?.id"
+                  [class.clickable]="match.status === 'PENDING' && match.player2"
+                  (click)="match.status === 'PENDING' && match.player2 ? selectWinner(match, match.player2.id) : null">
                   @if (match.player2) {
                     <img [src]="getAvatarUrl(match.player2.nick)" class="match-avatar">
                     <span>{{ match.player2.nick }}</span>
@@ -79,13 +87,17 @@
                 @if (match.status === 'RESOLVED') {
                   <div class="match-result">Resuelto</div>
                 } @else {
-                  <div class="match-result pending">Pendiente</div>
+                  <div class="match-result pending">Haz clic en el ganador</div>
                 }
               </div>
             }
           </div>
         }
       </div>
+
+      <button class="btn-next-round" (click)="nextRound()">
+        Generar Siguiente Ronda
+      </button>
     </section>
   }
 </div>

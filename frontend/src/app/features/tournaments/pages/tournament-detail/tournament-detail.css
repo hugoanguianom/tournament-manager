@@ -281,3 +281,31 @@
   .match-result.pending {
     color: #999;
   }
+
+   .match-player.clickable {
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  .match-player.clickable:hover {
+    background-color: #FFF3E0;
+  }
+
+  .btn-next-round {
+    display: block;
+    margin: 20px auto 0 auto;
+    background-color: var(--brand-green);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .btn-next-round:hover {
+    background-color: #4CAF50;
+  }
+

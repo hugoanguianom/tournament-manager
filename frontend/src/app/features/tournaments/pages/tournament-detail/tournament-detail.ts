@@ -136,4 +136,32 @@ groupMatchesByRound() {
   getAvatarUrl(nick: string): string {
     return `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(nick)}`;
   }
+  selectWinner(match: any, winnerId: number) {
+    if (this.tournamentId) {
+      this.tournamentsService.setMatchWinner(this.tournamentId, match.id, winnerId).subscribe({
+        next: () => {
+          this.loadBracket();
+        },
+        error: (err) => {
+          console.error('Error al marcar ganador:', err);
+          alert('Error al marcar ganador');
+        }
+      });
+    }
+  }
+
+  nextRound() {
+    if (this.tournamentId) {
+      this.tournamentsService.generateNextRound(this.tournamentId).subscribe({
+        next: () => {
+          this.loadBracket();
+          this.loadTournament();
+        },
+        error: (err) => {
+          console.error('Error:', err);
+          alert(err.error?.detail || 'Error al generar siguiente ronda');
+        }
+      });
+    }
+  }
 }
