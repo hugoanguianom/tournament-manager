@@ -7,7 +7,7 @@ from app.models import tournament_player
 from app.models import match 
 from fastapi.middleware.cors import CORSMiddleware 
 
-from app.routers import players_router, tournaments_router
+from app.routers import players_router, tournaments_router, reports_router
 
 Base.metadata.create_all(bind=engine)
 
@@ -26,6 +26,7 @@ app.add_middleware(
 
 app.include_router(players_router.router)
 app.include_router(tournaments_router.router) 
+app.include_router(reports_router.router)
 
 @app.get("/")
 def home():
