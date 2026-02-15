@@ -44,9 +44,19 @@
   }
 
 
-   @if (tournament?.status === 'GENERATED' && rounds.length > 0) {
+ @if ((tournament?.status === 'GENERATED' || tournament?.status === 'FINISHED') && rounds.length > 0) {
     <section class="bracket-section">
       <h2 class="section-title">Cuadro de Enfrentamientos</h2>
+
+      @if (champion) {
+        <div class="champion-banner">
+          <img [src]="getAvatarUrl(champion.nick)" class="champion-avatar">
+          <div class="champion-info">
+            <span class="champion-label">Campeon</span>
+            <h2 class="champion-nick">{{ champion.nick }}</h2>
+          </div>
+        </div>
+      }
 
       <div class="bracket-container">
         @for (round of rounds; track $index) {
@@ -54,13 +64,17 @@
             <h3 class="round-title">Ronda {{ $index + 1 }}</h3>
 
             @for (match of round; track match.id) {
-              <div class="match-card" [class.resolved]="match.status === 'RESOLVED'">
+              <div class="match-card"
+                [class.resolved]="match.status === 'RESOLVED'"
+                [class.faded]="champion">
 
                 <div
                   class="match-player"
                   [class.winner]="match.winner_id === match.player1?.id"
-                  [class.clickable]="match.status === 'PENDING' && match.player1"
-                  (click)="match.status === 'PENDING' && match.player1 ? selectWinner(match, match.player1.id) : null">
+                  [class.pre-selected]="pendingWinners[match.id] === match.player1?.id"
+                  [class.clickable]="match.status === 'PENDING' && match.player1 && tournament?.status === 'GENERATED'"
+                  (click)="match.status === 'PENDING' && match.player1 && tournament?.status === 'GENERATED' ?
+  toggleWinner(match, match.player1.id) : null">
                   @if (match.player1) {
                     <img [src]="getAvatarUrl(match.player1.nick)" class="match-avatar">
                     <span>{{ match.player1.nick }}</span>
@@ -74,8 +88,10 @@
                 <div
                   class="match-player"
                   [class.winner]="match.winner_id === match.player2?.id"
-                  [class.clickable]="match.status === 'PENDING' && match.player2"
-                  (click)="match.status === 'PENDING' && match.player2 ? selectWinner(match, match.player2.id) : null">
+                  [class.pre-selected]="pendingWinners[match.id] === match.player2?.id"
+                  [class.clickable]="match.status === 'PENDING' && match.player2 && tournament?.status === 'GENERATED'"
+                  (click)="match.status === 'PENDING' && match.player2 && tournament?.status === 'GENERATED' ?
+  toggleWinner(match, match.player2.id) : null">
                   @if (match.player2) {
                     <img [src]="getAvatarUrl(match.player2.nick)" class="match-avatar">
                     <span>{{ match.player2.nick }}</span>
@@ -85,7 +101,9 @@
                 </div>
 
                 @if (match.status === 'RESOLVED') {
-                  <div class="match-result">Resuelto</div>
+                  <div class="match-result">Ganador</div>
+                } @else if (pendingWinners[match.id]) {
+                  <div class="match-result selected">Ganador seleccionado</div>
                 } @else {
                   <div class="match-result pending">Haz clic en el ganador</div>
                 }
@@ -95,9 +113,18 @@
         }
       </div>
 
-      <button class="btn-next-round" (click)="nextRound()">
-        Generar Siguiente Ronda
-      </button>
+     @if (tournament?.status === 'GENERATED' && !champion && allPendingSelected())  {
+        <button
+          class="btn-next-round"
+          [disabled]="!allPendingSelected()"
+          (click)="nextRound()">
+          @if (isFinalRound) {
+            Confirmar Ganador
+          } @else {
+            Generar Siguiente Ronda
+          }
+        </button>
+      }
     </section>
   }
 </div>

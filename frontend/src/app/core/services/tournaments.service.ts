@@ -40,8 +40,8 @@ export class TournamentsService {
     );
   }
 
-  generateNextRound(tournamentId: number): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/${tournamentId}/next-round`, {});
+  generateNextRound(tournamentId: number, winners: { [matchId: number]: number }): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/${tournamentId}/next-round`, { winners: winners });
   }
 
 }

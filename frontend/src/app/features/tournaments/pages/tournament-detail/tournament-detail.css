@@ -308,4 +308,73 @@
   .btn-next-round:hover {
     background-color: #4CAF50;
   }
+  /* ===== CHAMPION ===== */
+  .champion-banner {
+    max-width: 400px;
+    margin: 0 auto 30px auto;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: linear-gradient(135deg, #FFF8E1, #FFFDE7);
+    border: 2px solid #FFD54F;
+    border-radius: 8px;
+    padding: 20px 30px;
+  }
+
+  .champion-avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 8px;
+    border: 2px solid #FFD54F;
+    background-color: #EEE;
+  }
+
+  .champion-info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .champion-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #F9A825;
+    letter-spacing: 1px;
+  }
+
+  .champion-nick {
+    margin: 4px 0 0 0;
+    font-size: 24px;
+    font-weight: 700;
+    color: #333;
+  }
+
+  /* ===== FADED MATCHES ===== */
+  .match-card.faded {
+    opacity: 0.4;
+  }
+
+ 
+  .btn-next-round {
+    display: block;
+    margin: 20px auto 0 auto;
+    background-color: var(--brand-green);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .btn-next-round:hover {
+    background-color: #4CAF50;
+  }
+    .match-player.pre-selected {
+    background-color: #FFF3E0;
+    border: 2px solid var(--brand-orange);
+    border-radius: 4px;
+  }
 
