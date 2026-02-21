@@ -1,6 +1,10 @@
  <div class="form-overlay">
     <div class="form-container">
-      <h2>{{ playerToEdit ? 'Edit Player' : 'New Player' }}</h2>
+      @if (playerToEdit) {
+        <h2>Edit Player</h2>
+  }   @else {
+        <h2>New Player</h2>
+  }
 
 
       <div class="form-group">
@@ -20,16 +24,17 @@
 
 
       <div class="logo-preview">
-
         <img [src]="avatarPreview" alt="Avatar preview">
       </div>
 
 
       <div class="form-actions">
         <button class="btn btn-cancel" (click)="onCancel()">Cancel</button>
-        <button class="btn btn-save" (click)="onSave()">
-          {{ playerToEdit ? 'Update' : 'Create' }}
-        </button>
+        @if (playerToEdit) {
+        <button class="btn btn-save" (click)="onSave()">Update</button>
+  }     @else {
+        <button class="btn btn-save" (click)="onSave()">Create</button>
+  }
       </div>
     </div>
   </div>
