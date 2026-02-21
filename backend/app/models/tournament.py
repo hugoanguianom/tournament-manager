@@ -20,8 +20,7 @@ class Tournament(Base):
     
     participants = relationship(
         "Player",
-        secondary="tournament_players",
-        backref="participated_tournaments"
+        secondary="tournament_players"
     )
 
-    matches = relationship("Match", back_populates="tournament")
+    matches = relationship("Match")
