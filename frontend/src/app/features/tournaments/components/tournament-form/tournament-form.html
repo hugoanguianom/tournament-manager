@@ -2,26 +2,26 @@
   <h2>Nuevo Torneo</h2>
 
   <div class="form-group">
-    <label for="tournamentName">Nombre del Torneo</label>
+    <label for="tournamentName">Tournament Name</label>
     <input
       type="text"
       id="tournamentName"
       [(ngModel)]="name"
-      placeholder="Ej: League of legends"
+      placeholder="Ej: C# Tournament 2026"
       [class.input-error]="showError"
       (input)="showError = false"
     >
     @if (showError) {
-      <span class="error-message">Indica el nombre del torneo</span>
+      <span class="error-message">Indicates the tournament name</span>
     }
   </div>
 
   <div class="form-actions">
     <button type="button" class="btn btn-cancel" (click)="onCancel()">
-      Cancelar
+      Cancel
     </button>
     <button type="button" class="btn btn-save" (click)="onSave()">
-      Crear
+      Create
     </button>
   </div>
 </div>
