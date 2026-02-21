@@ -1,16 +1,18 @@
 <div class="reports-page">
-    <h1 class="page-title">Informes y Estadisticas</h1>
+    <h1 class="page-title">Stadistics</h1>
 
+
+    <!-- Player ranking sectiom-->
     <section class="report-section">
-      <h2 class="section-title">Ranking de Jugadores</h2>
+      <h2 class="section-title">Player ranking</h2>
 
       <table class="leaderboard-table">
         <thead>
           <tr>
             <th>#</th>
-            <th>Jugador</th>
-            <th>Victorias</th>
-            <th>Derrotas</th>
+            <th>Player</th>
+            <th>Victory</th>
+            <th>Defeats</th>
           </tr>
         </thead>
         <tbody>
@@ -21,7 +23,7 @@
                 <img [src]="getAvatarUrl(player.nick)" class="table-avatar">
                 <span>{{ player.nick }}</span>
                 @if (!player.active) {
-                  <span class="inactive-badge">Inactivo</span>
+                  <span class="inactive-badge">Inactive</span>
                 }
               </td>
               <td class="wins">{{ player.wins }}</td>
@@ -32,9 +34,9 @@
       </table>
     </section>
 
-    <!-- HISTORIAL DE COMBATES -->
+    <!-- history combats section -->
     <section class="report-section">
-      <h2 class="section-title">Historial de Combates</h2>
+      <h2 class="section-title">Combat History</h2>
 
       <div class="tournament-selector">
         @for (t of tournaments; track t.id) {
@@ -52,12 +54,12 @@
         <table class="matches-table">
           <thead>
             <tr>
-              <th>Ronda</th>
-              <th>Jugador 1</th>
+              <th>Round</th>
+              <th>Player 1</th>
               <th></th>
-              <th>Jugador 2</th>
-              <th>Ganador</th>
-              <th>Estado</th>
+              <th>Player 2</th>
+              <th>Winner</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
@@ -78,9 +80,9 @@
           </tbody>
         </table>
       } @else if (selectedTournamentId) {
-        <p class="no-data">No hay combates en este torneo</p>
+        <p class="no-data">No matches available for this tournament</p>
       } @else {
-        <p class="no-data">Selecciona un torneo para ver su historial</p>
+        <p class="no-data">Select a tournament to view its history</p>
       }
     </section>
   </div>

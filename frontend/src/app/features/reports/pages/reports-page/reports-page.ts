@@ -13,9 +13,13 @@ import { Component, OnInit } from '@angular/core';
   })
   export class ReportsPageComponent implements OnInit {
 
+    // ranking list of players
     leaderboard: any[] = [];
+    // tournament list
     tournaments: any[] = [];
+    // selected tournament to show the history
     selectedTournamentId: number | null = null;
+    // matches of the selected tournament
     matches: any[] = [];
 
     constructor(
@@ -28,18 +32,21 @@ import { Component, OnInit } from '@angular/core';
       this.loadTournaments();
     }
 
+    // get the leaderboard data from the server and store it in the leaderboard
     loadLeaderboard() {
       this.reportsService.getLeaderboard().subscribe({
         next: (data) => this.leaderboard = data
       });
     }
 
+    // get the tournaments data from the server and store it in the tournaments
     loadTournaments() {
       this.tournamentsService.getTournaments().subscribe({
         next: (data) => this.tournaments = data
       });
     }
 
+    // when we select a tournament we get the bracket data from the server and store it in the matches
     selectTournament(id: number) {
       this.selectedTournamentId = id;
       this.tournamentsService.getBracket(id).subscribe({
@@ -51,6 +58,8 @@ import { Component, OnInit } from '@angular/core';
       return `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(nick)}`;
     }
 
+    // get the winner nick of a match
+    // if there is no winner we return '-'
     getWinnerNick(match: any): string {
       if (!match.winner_id) return '-';
       if (match.winner_id === match.player1?.id) return match.player1.nick;
