@@ -8,7 +8,6 @@ import { TournamentFormComponent } from '../../components/tournament-form/tourna
 @Component({
   selector: 'app-tournaments-page',
   standalone: true,
-  // Añade TournamentFormComponent aquí
   imports: [CommonModule, TournamentFormComponent],
   templateUrl: './tournaments-page.html',
   styleUrl: './tournaments-page.css'
@@ -27,8 +26,6 @@ export class TournamentsPageComponent implements OnInit {
     this.tournamentsService.getTournaments().subscribe(data => this.tournaments = data);
   }
 
-
-
   openCreateForm() {
     this.showForm = true;
   }
@@ -37,15 +34,17 @@ export class TournamentsPageComponent implements OnInit {
     this.showForm = false;
   }
 
-  handleSave(data: { name: string }) {
+
+  save(data: { name: string }) {
     this.tournamentsService.createTournament(data).subscribe(() => {
       this.loadTournaments();
       this.closeForm();
     });
   }
 
-  goToDetails(id: number) {
 
+  // navigate to tournament details page
+  goToDetails(id: number) {
   this.router.navigate(['/tournaments', id]);
   }
 }
