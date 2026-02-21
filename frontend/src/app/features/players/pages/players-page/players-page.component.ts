@@ -12,12 +12,13 @@ import { Component, OnInit } from '@angular/core';
     styleUrl: './players-page.component.css'
   })
   export class PlayersPageComponent implements OnInit {
-
+    // all players
     players: Player[] = [];
+    // show form when creating or editing a player
     showForm: boolean = false;
+    // if we will edit a player we will recibe the player
+    // if not we will receive null
     playerToEdit: Player | null = null;
-
-  
     defaultAvatar: string = 'https://ui-avatars.com/api/?name=?&background=random';
 
     constructor(private playersService: PlayersService) {}
@@ -26,6 +27,9 @@ import { Component, OnInit } from '@angular/core';
       this.loadPlayers();
     }
 
+    // load all players from the server
+    // --> services getAll --> backend get_all_players with dbquery --> get data from database
+    // --> backend get json data --> service receive data --> component receive data
     loadPlayers(): void {
       this.playersService.getAll().subscribe({
         next: (data) => {
@@ -47,7 +51,7 @@ import { Component, OnInit } from '@angular/core';
 
 
     getAvatarUrl(nick: string): string {
-      return `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(nick)}`;
+      return 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + nick;
     }
 
 
@@ -72,6 +76,7 @@ import { Component, OnInit } from '@angular/core';
     }
 
     savePlayer(playerData: { nick: string, id?: number }): void {
+      // if player has id, we update
       if (playerData.id) {
         this.playersService.update(playerData.id, { nick: playerData.nick }).subscribe({
           next: () => {
@@ -82,6 +87,7 @@ import { Component, OnInit } from '@angular/core';
             console.error('Error updating player:', err);
           }
         });
+        // if player has no id, we create
       } else {
         this.playersService.create({ nick: playerData.nick }).subscribe({
           next: () => {
@@ -95,17 +101,12 @@ import { Component, OnInit } from '@angular/core';
       }
     }
 
+    // toggle active or inactive status of a player
+    // set active or inactive and load all players
     togglePlayer(player: Player): void {
-      this.playersService.toggleActive(player.id).subscribe({
-        next: (updatedPlayer) => {
-          const index = this.players.findIndex(p => p.id === updatedPlayer.id);
-          if (index !== -1) {
-            this.players[index] = updatedPlayer;
-          }
-        },
-        error: (err) => {
-          console.error('Error toggling player:', err);
-        }
+      this.playersService.toggleActive(player.id).subscribe(() => {
+          this.loadPlayers();
       });
-    }
+  }
+
   }

@@ -1,19 +1,21 @@
+<!-- Tittle and button add player-->
 <div class="players-page">
   <div class="page-header">
-    <h1>Gestión de Jugadores</h1>
+    <h1>Player list</h1>
     <button class="btn btn-add" (click)="openCreateForm()">
-      <span class="icon"></span> Agregar Jugador
+      <span class="icon"></span> Add Player
     </button>
   </div>
 
+
+<!-- Active players section -->
   <section class="players-section">
     <h2 class="section-title">Activos <span class="badge">{{ activePlayers.length }}</span></h2>
-
     <div class="players-grid">
       @for (player of activePlayers; track player.id) {
         <div class="player-card active">
           <div class="card-header">
-<img [src]="getAvatarUrl(player.nick)"
+      <img [src]="getAvatarUrl(player.nick)"
        [alt]="player.nick"
        class="player-logo"
        (error)="onImageError($event)">            <div class="player-identity">
@@ -35,14 +37,15 @@
         </div>
       } @empty {
         <div class="empty-state">
-          <p>No hay jugadores activos</p>
+          <p>No active players</p>
         </div>
       }
     </div>
   </section>
 
+  <!-- Inactive players section -->
   <section class="players-section">
-    <h2 class="section-title inactive">Inactivos <span class="badge">{{ inactivePlayers.length }}</span></h2>
+    <h2 class="section-title inactive">Inactive <span class="badge">{{ inactivePlayers.length }}</span></h2>
 
     <div class="players-grid">
       @for (player of inactivePlayers; track player.id) {
@@ -61,21 +64,24 @@
 
           <div class="card-actions">
             <button (click)="openEditForm(player)" class="btn btn-text edit" title="Editar">
-              Editar
+              Edit
             </button>
             <button (click)="togglePlayer(player)" class="btn btn-text activate">
-              Activar
+              Activate
             </button>
           </div>
         </div>
       } @empty {
         <div class="empty-state">
-          <p>No hay jugadores inactivos</p>
+          <p>No inactive players</p>
         </div>
       }
     </div>
   </section>
 
+
+  <!-- Player form modal
+   only appears when the show form is true-->
   @if (showForm) {
     <div class="modal-overlay">
       <app-player-form
