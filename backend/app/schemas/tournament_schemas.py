@@ -24,3 +24,10 @@ class TournamentResponse(BaseModel):
 
 class TournamentGenerate(BaseModel):
     player_ids: List[int]
+    
+class Winners(BaseModel):
+      match_id: int
+      winner_id: int
+
+class NextRoundData(BaseModel):
+      winners: List[Winners]
