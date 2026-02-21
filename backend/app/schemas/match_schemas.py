@@ -3,7 +3,7 @@ from typing import Optional
 from enum import Enum
 from .player_schemas import PlayerResponse
 
-
+# Match schemas to define a structure for the match data transfer object (DTO) between the frontend and backend
 class MatchStatus(str, Enum):
     PENDING = "PENDING"
     RESOLVED = "RESOLVED"
@@ -23,5 +23,3 @@ class MatchResponse(BaseModel):
         from_attributes = True
 
 
-class SetWinner(BaseModel):
-    winner_id: int

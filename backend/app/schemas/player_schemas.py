@@ -1,8 +1,7 @@
 # Data Transfer Object 
 from pydantic import BaseModel
 from typing import Optional
-
-
+# Player schemas to define a structure for the player data transfer object (DTO) between the frontend and backend
 # POST to create a new Player
 class PlayerCreate(BaseModel):
     nick:str
@@ -12,7 +11,7 @@ class PlayerUpdate(BaseModel):
     nick: Optional[str]=None
     active : Optional[bool] = None
    
-# Get data from specific player from frontend (JSON)    
+# Get data from specific player from frontend    
 class PlayerResponse(BaseModel):
     id:int
     nick: str
