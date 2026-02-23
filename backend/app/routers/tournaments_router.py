@@ -52,8 +52,8 @@ def generate_tournament(tournament_id: int, players_id: schemas.TournamentGenera
     if len(players_id.player_ids) < 2:
         raise HTTPException(status_code=400, detail="at least 2 players_id are required")
 
-    players_id = db.query(Player).filter(Player.id.in_(players_id.player_ids)).all()
-    tournament.participants = players_id
+    players = db.query(Player).filter(Player.id.in_(players_id.player_ids)).all()
+    tournament.participants = players
 
     random.shuffle(players_id.player_ids)
 
@@ -64,8 +64,17 @@ def generate_tournament(tournament_id: int, players_id: schemas.TournamentGenera
         bracket_size *= 2
         
 
-    while len(players_id.player_ids) < bracket_size:
-        players_id.player_ids.append(None)
+    final_list = []
+    byes_needed = bracket_size - len(players_id.player_ids)
+    bye_index = 0
+
+    for i in range(len(players_id.player_ids)):
+        final_list.append(players_id.player_ids[i])
+        if bye_index < byes_needed:
+            final_list.append(None)
+            bye_index = bye_index + 1
+
+    players_id.player_ids = final_list
 
     
     for i in range(0, len(players_id.player_ids), 2):
