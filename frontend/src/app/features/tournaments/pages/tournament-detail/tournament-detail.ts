@@ -14,22 +14,23 @@ import { Component, OnInit } from '@angular/core';
   })
   export class TournamentDetailComponent implements OnInit {
 
+    // current tournament get bracket get tournament id
     tournamentId: number | null = null;
     tournament: any = null;
 
-    // DRAFT: jugadores disponibles y seleccionados
+    // draft: all players and selected players
     allPlayers: Player[] = [];
     selectedPlayerIds: number[] = [];
 
-    // GENERATED/FINISHED: bracket
-    rounds: any[][] = [];
-    isFinalRound: boolean = false;
-    champion: any = null;
+    // generate and finished: save rounds
+    rounds: any[][] = []; // list of list. each position is a round with its matches
+    isFinalRound: boolean = false; // when the last round has only one match we show the champion
+    champion: any = null; // save the champion
 
-    // Ganadores preseleccionados (clave = id del match, valor = id del ganador)
     pendingWinners: { [matchId: number]: number } = {};
 
     constructor(
+      // with activate route we can get the tournament id fron the url
       private route: ActivatedRoute,
       private tournamentsService: TournamentsService,
       private playersService: PlayersService,
@@ -44,10 +45,13 @@ import { Component, OnInit } from '@angular/core';
     // Carga el torneo y decide que mostrar segun su estado
     loadTournament() {
       if (!this.tournamentId) return;
-
+      // call backend to get tournament details
       this.tournamentsService.getTournament(this.tournamentId).subscribe({
         next: (data) => {
+          // save the tournament
           this.tournament = data;
+          // if draft: select all players to start a new tournament
+          // else load the bracket to show the tournament progress
           if (data.status === 'DRAFT') {
             this.loadPlayers();
           } else {
@@ -57,31 +61,30 @@ import { Component, OnInit } from '@angular/core';
       });
     }
 
-    // Carga los jugadores activos (solo para DRAFT)
+    // get active players to select
     loadPlayers() {
       this.playersService.getAll().subscribe(players => {
         this.allPlayers = players.filter(p => p.active);
       });
     }
 
-    // Carga los matches del bracket y los agrupa por ronda
     loadBracket() {
       if (!this.tournamentId) return;
-
+      // get the brackets from the tournament id and
+      // group them by round : match1_round1, match2_round1...
       this.tournamentsService.getBracket(this.tournamentId).subscribe({
         next: (matches) => {
           this.rounds = [];
           this.champion = null;
-
-          // Encontrar cuantas rondas hay
+          // find max round number
           let maxRound = 0;
+          // for each match we find the max round
           for (let i = 0; i < matches.length; i++) {
             if (matches[i].round > maxRound) {
               maxRound = matches[i].round;
             }
           }
-
-          // Agrupar matches por ronda
+          // group matches by round and push them to round list
           for (let r = 1; r <= maxRound; r++) {
             const roundMatches = [];
             for (let i = 0; i < matches.length; i++) {
@@ -92,12 +95,14 @@ import { Component, OnInit } from '@angular/core';
             this.rounds.push(roundMatches);
           }
 
-          // Detectar si es la ronda final (solo 1 match)
+          // find the champion
+          // catch the last round
+          // if only has one match -> its the fina round
+          // if the final round is resolved we can show the champion
           if (this.rounds.length > 0) {
             const lastRound = this.rounds[this.rounds.length - 1];
             this.isFinalRound = lastRound.length === 1;
 
-            // Si la final ya esta resuelta, hay campeon
             if (this.isFinalRound && lastRound[0].status === 'RESOLVED') {
               const finalMatch = lastRound[0];
               if (finalMatch.winner_id === finalMatch.player1?.id) {
@@ -128,10 +133,9 @@ import { Component, OnInit } from '@angular/core';
     // Genera el bracket con los jugadores seleccionados
     confirmParticipants() {
       if (!this.tournamentId || this.selectedPlayerIds.length < 2) {
-        alert('Necesitas al menos 2 jugadores.');
+        alert('need at least 2 players');
         return;
       }
-
       this.tournamentsService.generateTournament(this.tournamentId, { player_ids: this.selectedPlayerIds }).subscribe({
         next: () => this.router.navigate(['/tournaments']),
         error: () => alert('Error al generar el cuadro.')
@@ -161,17 +165,26 @@ import { Component, OnInit } from '@angular/core';
     }
 
     // Envia los ganadores al backend y avanza a la siguiente ronda
-    nextRound() {
+   nextRound() {
       if (!this.tournamentId) return;
 
-      this.tournamentsService.generateNextRound(this.tournamentId, this.pendingWinners).subscribe({
-        next: () => {
-          this.pendingWinners = {};
-          this.loadTournament();
-        },
-        error: () => alert('Error al avanzar ronda')
+      let winnersList = [];
+      for (let matchId in this.pendingWinners) {
+          winnersList.push({
+              match_id: Number(matchId),
+              winner_id: this.pendingWinners[matchId]
+          });
+      }
+
+      this.tournamentsService.generateNextRound(this.tournamentId,
+  winnersList).subscribe({
+          next: () => {
+              this.pendingWinners = {};
+              this.loadTournament();
+          },
+          error: () => alert('Error al avanzar ronda')
       });
-    }
+  }
 
     getAvatarUrl(nick: string): string {
       return `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(nick)}`;

@@ -1,7 +1,8 @@
+<!-- Header: back, name, status, and generate button -->
 <div class="tournaments-page">
   <div class="page-header">
     <div class="header-left">
-      <button class="btn-back" routerLink="/tournaments">Volver</button>
+      <button class="btn-back" routerLink="/tournaments">Back</button>
       <h1>{{ tournament?.name }}</h1>
       <span class="status-badge" [class.generated]="tournament?.status === 'GENERATED'">
         {{ tournament?.status }}
@@ -13,17 +14,19 @@
         class="btn-save"
         [disabled]="selectedPlayerIds.length < 2"
         (click)="confirmParticipants()">
-        Generar Cuadro
+        Generate
       </button>
     }
   </div>
+
+  <!-- if DRAFT: show all players, select players, select or unselect players-->
 
 
   @if (tournament?.status === 'DRAFT') {
     <section class="tournaments-section">
       <h2 class="section-title">
 
-        <span class="badge">{{ allPlayers.length }} disponibles</span>
+        <span class="badge">{{ allPlayers.length }} available players</span>
       </h2>
 
       <div class="players-selection-grid">
@@ -44,26 +47,35 @@
   }
 
 
+  <!-- if GENERATED or FINISHED: show bracket with rounds and matches -->
+
  @if ((tournament?.status === 'GENERATED' || tournament?.status === 'FINISHED') && rounds.length > 0) {
     <section class="bracket-section">
-      <h2 class="section-title">Cuadro de Enfrentamientos</h2>
+      <h2 class="section-title">Bracket</h2>
 
+      <!-- Only appears if the tournament has a champion -->
       @if (champion) {
         <div class="champion-banner">
           <img [src]="getAvatarUrl(champion.nick)" class="champion-avatar">
           <div class="champion-info">
-            <span class="champion-label">Campeon</span>
+            <span class="champion-label">Champion</span>
             <h2 class="champion-nick">{{ champion.nick }}</h2>
           </div>
         </div>
       }
 
+    <!-- rounds. Loop each round to find all the match from the round-->
       <div class="bracket-container">
         @for (round of rounds; track $index) {
           <div class="round-column">
             <h3 class="round-title">Ronda {{ $index + 1 }}</h3>
 
             @for (match of round; track match.id) {
+              <!-- eatch match card has: player 1 and player 2-->
+              <!-- css class -->
+               <!-- winner: if the match is resolved-->
+                <!-- preselected: if the match has a pending winner selected-->
+                 <!-- clickable: the match has a pending winner -->
               <div class="match-card"
                 [class.resolved]="match.status === 'RESOLVED'"
                 [class.faded]="champion">
@@ -100,12 +112,14 @@
                   }
                 </div>
 
+
+                <!-- shows the status of the match. Winner / winner selected / click to select the winner -->
                 @if (match.status === 'RESOLVED') {
-                  <div class="match-result">Ganador</div>
+                  <div class="match-result">Winner</div>
                 } @else if (pendingWinners[match.id]) {
-                  <div class="match-result selected">Ganador seleccionado</div>
+                  <div class="match-result selected">Winner selected</div>
                 } @else {
-                  <div class="match-result pending">Haz clic en el ganador</div>
+                  <div class="match-result pending">Click to select the winner</div>
                 }
               </div>
             }
@@ -113,15 +127,19 @@
         }
       </div>
 
+      <!-- button to next round-->
+       <!-- only appears if the tournament is generated-->
+        <!-- there is no champion yet-->
+         <!-- all pending winners are selected -->
      @if (tournament?.status === 'GENERATED' && !champion && allPendingSelected())  {
         <button
           class="btn-next-round"
           [disabled]="!allPendingSelected()"
           (click)="nextRound()">
           @if (isFinalRound) {
-            Confirmar Ganador
+            Confirm champion
           } @else {
-            Generar Siguiente Ronda
+            Generate next round
           }
         </button>
       }
