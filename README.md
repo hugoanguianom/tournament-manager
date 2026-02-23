@@ -32,6 +32,7 @@ Web application for managing KO tournaments. It allows you to create players, or
 
 ## Project Structure
 
+```
 backend/
 ├── app/
 │   ├── main.py                # API entry point
@@ -61,6 +62,7 @@ frontend/
 │   │   ├── tournaments/           # Tournament management module
 │   │   └── reports/               # Reports management module
 │   └── app.routes.ts              # Navigation routes
+```
 
 ## Endpoints
 
