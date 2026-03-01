@@ -20,15 +20,22 @@ Web application for managing KO tournaments. It allows you to create players, or
 ### Reports
 - Player ranking based on wins and losses.
 - Match history per tournament.
+# 
 
-### Players
-![Players](screenshots/players.png)
-
-### Tournaments
-![Draft](screenshots/tournaments.png)
-
-### Champion
-![Bracket](screenshots/tournament-winner.png)
+<div align="center">
+  <table>
+    <tr>
+      <td align="center">
+        <strong>Players</strong><br/>
+        <img src="screenshots/players.png" alt="Players" width="520"/>
+      </td>
+      <td align="center">
+        <strong>Champion</strong><br/>
+        <img src="screenshots/tournament-winner.png" alt="Champion" width="520"/>
+      </td>
+    </tr>
+  </table>
+</div>
 
 ## Project Structure
 
